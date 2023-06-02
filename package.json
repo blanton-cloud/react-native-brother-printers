@@ -4,10 +4,12 @@
   "version": "0.0.4",
   "description": "A package that allows you to printer with brother printers",
   "main": "index.js",
+  "types": "index.d.ts",
   "files": [
     "README.md",
     "android",
     "index.js",
+    "index.d.ts",
     "ios",
     "react-native-brother-printers.podspec"
   ],

@@ -68,12 +68,16 @@ RCT_REMAP_METHOD(pingPrinter, printerAddress:(NSString *)ip resolver:(RCTPromise
         driverGenerateResult.driver == nil) {
 
         NSLog(@"%@", @(driverGenerateResult.error.code));
+        NSString *errorCodeString = [NSString stringWithFormat:@"%@", @(driverGenerateResult.error.code)];
+        NSError* error = [NSError errorWithDomain:@"com.react-native-brother-printers.rn" code:driverGenerateResult.error.code userInfo:[NSDictionary dictionaryWithObject:errorCodeString forKey:NSLocalizedDescriptionKey]];
 
-        return reject(DISCOVER_READER_ERROR, @"A problem occured when trying to execute discoverPrinters", Nil);
+        [driverGenerateResult.driver closeChannel];
+
+        return reject(DISCOVER_READER_ERROR, @"A problem occured when trying to execute pingPrinter", error);
     }
 
     NSLog(@"We were able to discover a printer");
-
+    [driverGenerateResult.driver closeChannel];
     resolve(Nil);
 }
 
