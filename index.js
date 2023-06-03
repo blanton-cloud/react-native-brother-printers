@@ -4,6 +4,7 @@ import {NativeModules, NativeEventEmitter} from "react-native";
 
 const {ReactNativeBrotherPrinters} = NativeModules;
 
+export const LabelSizeDieCutW17H54 = 0;
 export const LabelSizeDieCutW17H87 = 1;
 export const LabelSizeDieCutW23H23 = 2;
 export const LabelSizeDieCutW29H42 = 3;
@@ -11,27 +12,26 @@ export const LabelSizeDieCutW29H90 = 4;
 export const LabelSizeDieCutW38H90 = 5;
 export const LabelSizeDieCutW39H48 = 6;
 export const LabelSizeDieCutW52H29 = 7;
-export const LabelSizeDieCutW17H54 = 0;
 export const LabelSizeDieCutW62H29 = 8;
 export const LabelSizeDieCutW62H100 = 9;
 export const LabelSizeDieCutW60H86 = 10;
 export const LabelSizeDieCutW54H29 = 11;
 export const LabelSizeDieCutW102H51 = 12;
 export const LabelSizeDieCutW102H152 = 13;
-export const LabelSizeDieCutW103H164 = 13;
-export const LabelSizeRollW12 = 14;
-export const LabelSizeRollW29 = 15;
-export const LabelSizeRollW38 = 16;
-export const LabelSizeRollW50 = 17;
-export const LabelSizeRollW54 = 18;
-export const LabelSizeRollW62 = 19;
-export const LabelSizeRollW62RB = 20;
-export const LabelSizeRollW102 = 21;
-export const LabelSizeRollW103 = 22;
-export const LabelSizeDTRollW90 = 23;
-export const LabelSizeDTRollW102 = 24;
-export const LabelSizeDTRollW102H51 = 25;
-export const LabelSizeDTRollW102H152 = 26;
+export const LabelSizeDieCutW103H164 = 14;
+export const LabelSizeRollW12 = 15;
+export const LabelSizeRollW29 = 16;
+export const LabelSizeRollW38 = 17;
+export const LabelSizeRollW50 = 18;
+export const LabelSizeRollW54 = 19;
+export const LabelSizeRollW62 = 20;
+export const LabelSizeRollW62RB = 21;
+export const LabelSizeRollW102 = 22;
+export const LabelSizeRollW103 = 23;
+export const LabelSizeDTRollW90 = 24;
+export const LabelSizeDTRollW102 = 25;
+export const LabelSizeDTRollW102H51 = 26;
+export const LabelSizeDTRollW102H152 = 27;
 
 export const LabelSize = {
   LabelSizeDieCutW17H54,
@@ -65,34 +65,34 @@ export const LabelSize = {
 }
 
 export const LabelNames = [
-  "Die Cut 17mm x 54mm",
-  "Die Cut 17mm x 87mm",
-  "Die Cut 23mm x 23mm",
-  "Die Cut 29mm x 42mm",
-  "Die Cut 29mm x 90mm",
-  "Die Cut 38mm x 90mm",
-  "Die Cut 39mm x 48mm",
-  "Die Cut 52mm x 29mm",
-  "Die Cut 62mm x 29mm",
-  "Die Cut 62mm x 10mm",
-  "Die Cut 60mm x 86mm",
-  "Die Cut 54mm x 29mm",
-  "Die Cut 102mm x 51mm",
-  "Die Cut 102mm x 152mm",
-  "Die Cut 103mm x 164mm",
-  "12mm",
-  "29mm",
-  "38mm",
-  "50mm",
-  "54mm",
-  "62mm",
-  "62mm RB",
-  "10mm 2",
-  "10mm 3",
-  "DT 90mm",
-  "DT 102mm",
-  "DT 102mm x 51mm",
-  "DT 102mm x 152mm",
+  "Die Cut 17mm x 54mm", // 0
+  "Die Cut 17mm x 87mm", // 1
+  "Die Cut 23mm x 23mm", // 2
+  "Die Cut 29mm x 42mm", // 3
+  "Die Cut 29mm x 90mm", // 4
+  "Die Cut 38mm x 90mm", // 5
+  "Die Cut 39mm x 48mm", // 6
+  "Die Cut 52mm x 29mm", // 7
+  "Die Cut 62mm x 29mm", // 8
+  "Die Cut 62mm x 100mm", // 9
+  "Die Cut 60mm x 86mm", // 10
+  "Die Cut 54mm x 29mm", // 11
+  "Die Cut 102mm x 51mm", // 12
+  "Die Cut 102mm x 152mm", // 13
+  "Die Cut 103mm x 164mm", // 14
+  "12mm", // 15
+  "29mm", // 16
+  "38mm", // 17
+  "50mm", // 18
+  "54mm", // 19
+  "62mm", // 20
+  "62mm RB", // 21
+  "102mm", // 22
+  "103mm", // 23
+  "DT 90mm", // 24
+  "DT 102mm", // 25
+  "DT 102mm x 51mm", // 26
+  "DT 102mm x 152mm", // 27
 ];
 
 const {
