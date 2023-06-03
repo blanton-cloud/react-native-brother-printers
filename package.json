@@ -1,7 +1,7 @@
 {
-  "name": "react-native-brother-printers",
+  "name": "@w3lcome/react-native-brother-printers",
   "title": "React Native Brother Printers",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A package that allows you to printer with brother printers",
   "main": "index.js",
   "types": "index.d.ts",
@@ -13,13 +13,14 @@
     "ios",
     "react-native-brother-printers.podspec"
   ],
+  "private": false,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Avery246813579/react-native-brother-printers.git",
-    "baseUrl": "https://github.com/Avery246813579/react-native-brother-printers"
+    "url": "git+https://github.com/W3lcomeApp/react-native-brother-printers.git",
+    "baseUrl": "https://github.com/W3lcomeApp/react-native-brother-printers"
   },
   "keywords": [
     "react-native",
@@ -31,6 +32,9 @@
     "name": "Avery Durrant",
     "email": "avery@dripos.com"
   },
+  "contributors": [
+    "Alisson Enz Rossi <alisson@w3lcome.com>"
+  ],
   "license": "MIT",
   "readmeFilename": "README.md",
   "peerDependencies": {
