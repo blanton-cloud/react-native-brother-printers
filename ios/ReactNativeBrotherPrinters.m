@@ -121,12 +121,18 @@ RCT_REMAP_METHOD(printImage, deviceInfo:(NSDictionary *)device printerUri: (NSSt
         NSString *errorCodeString = [NSString stringWithFormat:@"Error code: %ld", (long)printError.code];
         NSString *errorDescription = [NSString stringWithFormat:@"%@ - %@", errorCodeString, printError.description];
 
-        NSDictionary *errorInfo = @{@"errorCode": @(printError.code),
-                                    @"errorDescription": errorDescription};
+        NSDictionary *userInfo = @{
+            NSLocalizedDescriptionKey: errorDescription,
+            @"errorCode": @(printError.code),
+        };
+        
+        NSError *error = [NSError errorWithDomain:@"com.react-native-brother-printers.rn" 
+                                            code:printError.code 
+                                        userInfo:userInfo];
 
         [printerDriver closeChannel]; // Close the channel
 
-        reject(PRINT_ERROR, @"There was an error trying to print the image", errorInfo);
+        reject(PRINT_ERROR, @"There was an error trying to print the image", error);
     } else {
         NSLog(@"Success - Print Image");
 
