@@ -112,24 +112,28 @@ RCT_REMAP_METHOD(printImage, deviceInfo:(NSDictionary *)device printerUri: (NSSt
 
     NSLog(@"Auto Cut: %@, Label Size: %@", options[@"autoCut"], options[@"labelSize"]);
 
-
     NSURL *url = [NSURL URLWithString:imageStr];
     BRLMPrintError *printError = [printerDriver printImageWithURL:url settings:qlSettings];
 
     if (printError.code != BRLMPrintErrorCodeNoError) {
         NSLog(@"Error - Print Image: %@", printError);
 
-        NSError* error = [NSError errorWithDomain:@"com.react-native-brother-printers.rn" code:1 userInfo:[NSDictionary dictionaryWithObject:printError.description forKey:NSLocalizedDescriptionKey]];
+        NSString *errorCodeString = [NSString stringWithFormat:@"Error code: %ld", (long)printError.code];
+        NSString *errorDescription = [NSString stringWithFormat:@"%@ - %@", errorCodeString, printError.description];
+        NSError* error = [NSError errorWithDomain:@"com.react-native-brother-printers.rn" code:printError.code userInfo:[NSDictionary dictionaryWithObject:errorDescription forKey:NSLocalizedDescriptionKey]];
+
+        [printerDriver closeChannel]; // Close the channel
 
         reject(PRINT_ERROR, @"There was an error trying to print the image", error);
     } else {
         NSLog(@"Success - Print Image");
 
+        [printerDriver closeChannel]; // Close the channel
+
         resolve(Nil);
     }
-
-    [printerDriver closeChannel];
 }
+
 
 -(void)didFinishSearch:(id)sender
 {
