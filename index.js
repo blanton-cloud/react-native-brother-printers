@@ -142,8 +142,11 @@ export async function printImage(device, uri, params = {}) {
 //   return ReactNativeBrotherPrinters?.printPDF(device, uri, params);
 // }
 
-const listeners = new NativeEventEmitter(ReactNativeBrotherPrinters);
+let listeners;
+if (ReactNativeBrotherPrinters) {
+  listeners = new NativeEventEmitter(ReactNativeBrotherPrinters);
+}
 
 export function registerBrotherListener(key, method) {
-  return listeners.addListener(key, method);
+  return listeners?.addListener(key, method);
 }
