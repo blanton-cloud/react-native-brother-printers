@@ -1,8 +1,8 @@
 // main index.js
 
-import {NativeModules, NativeEventEmitter} from "react-native";
+import { NativeModules, NativeEventEmitter } from "react-native";
 
-const {ReactNativeBrotherPrinters} = NativeModules;
+const { ReactNativeBrotherPrinters } = NativeModules || {};
 
 export const LabelSizeDieCutW17H54 = 0;
 export const LabelSizeDieCutW17H87 = 1;
@@ -95,13 +95,6 @@ export const LabelNames = [
   "DT 102mm x 152mm", // 27
 ];
 
-const {
-  discoverPrinters: _discoverPrinters,
-  pingPrinter: _pingPrinter,
-  printImage: _printImage,
-  printPDF: _printPDF,
-} = ReactNativeBrotherPrinters;
-
 /**
  * Starts the discovery process for brother printers
  *
@@ -112,7 +105,7 @@ const {
  * @return {Promise<void>}
  */
 export async function discoverPrinters(params = {}) {
-  return _discoverPrinters(params);
+  return ReactNativeBrotherPrinters?.discoverPrinters(params);
 }
 
 /**
@@ -123,7 +116,7 @@ export async function discoverPrinters(params = {}) {
  * @return {Promise<void>}
  */
 export async function pingPrinter(ip) {
-  return _pingPrinter(ip);
+  return ReactNativeBrotherPrinters?.pingPrinter(ip);
 }
 
 /**
@@ -142,11 +135,11 @@ export async function printImage(device, uri, params = {}) {
     return new Error("Label size must be given when printing a label");
   }
 
-  return _printImage(device, uri, params);
+  return ReactNativeBrotherPrinters?.printImage(device, uri, params);
 }
 
 // export async function printPDF(device, uri, params = {}) {
-//   return _printPDF(device, uri, params);
+//   return ReactNativeBrotherPrinters?.printPDF(device, uri, params);
 // }
 
 const listeners = new NativeEventEmitter(ReactNativeBrotherPrinters);
