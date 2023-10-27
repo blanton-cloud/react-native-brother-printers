@@ -79,7 +79,7 @@ export interface Device {
 export function printImage(
   device: Device,
   uri: string,
-  params: { autoCut?: boolean; labelSize: number }
+  params: { autoCut?: boolean; labelSize: number, isHighQuality?: boolean, isHalftoneErrorDiffusion?: boolean }
 ): Promise<any>;
 
 export function registerBrotherListener(key: any, method: any): any;

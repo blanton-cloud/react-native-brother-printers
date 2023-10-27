@@ -127,6 +127,8 @@ export async function pingPrinter(ip) {
  * @param params
  * @param params.autoCut            Boolean if the printer should auto cut the receipt/label
  * @param params.labelSize          Label size that we are printing with
+ * @param params.isHighQuality
+ * @param params.isHalftoneErrorDiffusion
  *
  * @return {Promise<*>}
  */

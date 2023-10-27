@@ -110,6 +110,26 @@ RCT_REMAP_METHOD(printImage, deviceInfo:(NSDictionary *)device printerUri: (NSSt
         qlSettings.labelSize = [options[@"labelSize"] intValue];
     }
 
+    if (options[@"isHighQuality"]) {
+        if ([options[@"isHighQuality"] boolValue]) {
+            qlSettings.printQuality = BRLMPrintSettingsPrintQualityBest;
+            NSLog(@"High Quality is enabled");
+        } else {
+            qlSettings.printQuality = BRLMPrintSettingsPrintQualityFast;
+            NSLog(@"High Quality is disabled");
+        }
+    }
+
+    if (options[@"isHalftoneErrorDiffusion"]) {
+        if ([options[@"isHalftoneErrorDiffusion"] boolValue]) {
+            qlSettings.halftone = BRLMPrintSettingsHalftoneErrorDiffusion;
+            NSLog(@"Error Diffusion is enabled");
+        } else {
+            qlSettings.halftone = BRLMPrintSettingsHalftoneThreshold;
+            NSLog(@"Error Diffusion is disabled");
+        }
+    }
+
     NSLog(@"Auto Cut: %@, Label Size: %@", options[@"autoCut"], options[@"labelSize"]);
 
     NSURL *url = [NSURL URLWithString:imageStr];
