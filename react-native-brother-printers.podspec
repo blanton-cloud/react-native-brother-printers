@@ -12,11 +12,8 @@ Pod::Spec.new do |s|
                   The iOS portion of the wrapper for using brother printers with react native
                    DESC
   s.homepage     = "https://github.com/W3lcomeApp/react-native-brother-printers"
-  # brief license entry:
   s.license      = "MIT"
-  # optional - use expanded license entry instead:
-  # s.license    = { :type => "MIT", :file => "LICENSE" }
-  s.authors      = { "Your Name" => "avery@dripos.com" }
+  s.authors      = { "W3lcome" => "dev@w3lcome.com" }
   s.platforms    = { :ios => "9.0" }
   s.source       = { :git => "https://github.com/W3lcomeApp/react-native-brother-printers.git", :tag => "#{s.version}" }
 
@@ -25,6 +22,6 @@ Pod::Spec.new do |s|
   s.resources = 'ios/**/*.plist'
 
   s.dependency "React"
-  s.dependency "BRLMPrinterKit"
+  s.dependency "BRLMPrinterKit", '4.0.2.1'
 end
 
