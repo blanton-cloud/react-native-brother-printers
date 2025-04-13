@@ -12,7 +12,6 @@
     "ios",
     "react-native-brother-printers.podspec"
   ],
-  "private": false,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -44,5 +43,6 @@
     "prettier": "^2.2.1",
     "react": "^18.3.1",
     "react-native": "^0.78.0"
-  }
+  },
+  "packageManager": "yarn@4.9.1"
 }
