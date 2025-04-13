@@ -144,6 +144,39 @@ export async function printImage(device, uri, params = {}) {
 //   return ReactNativeBrotherPrinters?.printPDF(device, uri, params);
 // }
 
+export const discoverBluetoothPrinters = async () => {
+  try {
+    const printers = await ReactNativeBrotherPrinters.discoverBluetoothPrinters();
+    console.log('Discovered printers:', printers);
+    return printers;
+  } catch (error) {
+    console.error('Error discovering printers:', error);
+    throw error;
+  }
+};
+
+export const connectToBluetoothPrinter = async (serialNumber) => {
+  try {
+    const result = await ReactNativeBrotherPrinters.connectToBluetoothPrinter(serialNumber);
+    console.log('Connected to printer:', result);
+    return result;
+  } catch (error) {
+    console.error('Error connecting to printer:', error);
+    throw error;
+  }
+};
+
+export const printViaBluetooth = async (serialNumber, data) => {
+  try {
+    const result = await ReactNativeBrotherPrinters.printViaBluetooth(serialNumber, data);
+    console.log('Print result:', result);
+    return result;
+  } catch (error) {
+    console.error('Error printing:', error);
+    throw error;
+  }
+};
+
 let listeners;
 if (ReactNativeBrotherPrinters) {
   listeners = new NativeEventEmitter(ReactNativeBrotherPrinters);
