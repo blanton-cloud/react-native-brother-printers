@@ -14,6 +14,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # Enable Corepack and set Yarn version
+      - name: Enable Corepack and set Yarn version
+        run: |
+          corepack enable
+          corepack prepare yarn@4.9.1 --activate
+
       # Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -21,12 +27,6 @@ jobs:
           node-version: '20'
           cache: 'yarn'
           registry-url: https://npm.pkg.github.com/
-
-      # Enable Corepack and use the correct Yarn version
-      - name: Enable Corepack and set Yarn version
-        run: |
-          corepack enable
-          corepack prepare yarn@4.9.1 --activate
 
       # Authenticate with GitHub Packages
       - name: Authenticate with GitHub Packages
