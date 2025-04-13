@@ -163,65 +163,65 @@ RCT_REMAP_METHOD(printImage, deviceInfo:(NSDictionary *)device printerUri: (NSSt
     }
 }
 
-RCT_EXPORT_METHOD(discoverBluetoothPrinters:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
-  BRPtouchBluetoothManager *bluetoothManager = [BRPtouchBluetoothManager sharedManager];
-  NSArray *pairedPrinters = [bluetoothManager pairedDevices];
+// RCT_EXPORT_METHOD(discoverBluetoothPrinters:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
+//   BRPtouchBluetoothManager *bluetoothManager = [BRPtouchBluetoothManager sharedManager];
+//   NSArray *pairedPrinters = [bluetoothManager pairedDevices];
   
-  NSMutableArray *printers = [NSMutableArray array];
-  for (BRPtouchDeviceInfo *deviceInfo in pairedPrinters) {
-    [printers addObject:@{
-      @"printerName": deviceInfo.strPrinterName,
-      @"modelName": deviceInfo.strModelName,
-      @"serialNumber": deviceInfo.strSerialNumber
-    }];
-  }
+//   NSMutableArray *printers = [NSMutableArray array];
+//   for (BRPtouchDeviceInfo *deviceInfo in pairedPrinters) {
+//     [printers addObject:@{
+//       @"printerName": deviceInfo.strPrinterName,
+//       @"modelName": deviceInfo.strModelName,
+//       @"serialNumber": deviceInfo.strSerialNumber
+//     }];
+//   }
   
-  resolve(printers);
-}
+//   resolve(printers);
+// }
 
-RCT_EXPORT_METHOD(connectToBluetoothPrinter:(NSString *)serialNumber resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
-  BRPtouchBluetoothManager *bluetoothManager = [BRPtouchBluetoothManager sharedManager];
-  NSArray *pairedPrinters = [bluetoothManager pairedDevices];
+// RCT_EXPORT_METHOD(connectToBluetoothPrinter:(NSString *)serialNumber resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
+//   BRPtouchBluetoothManager *bluetoothManager = [BRPtouchBluetoothManager sharedManager];
+//   NSArray *pairedPrinters = [bluetoothManager pairedDevices];
   
-  for (BRPtouchDeviceInfo *deviceInfo in pairedPrinters) {
-    if ([deviceInfo.strSerialNumber isEqualToString:serialNumber]) {
-      // Create a BRLMPrinterDriver for the selected printer
-      BRLMPrinterDriver *printerDriver = [[BRLMPrinterDriver alloc] initWithDeviceInfo:deviceInfo];
-      if (printerDriver) {
-        resolve(@{@"status": @"connected", @"printerName": deviceInfo.strPrinterName});
-        return;
-      }
-    }
-  }
+//   for (BRPtouchDeviceInfo *deviceInfo in pairedPrinters) {
+//     if ([deviceInfo.strSerialNumber isEqualToString:serialNumber]) {
+//       // Create a BRLMPrinterDriver for the selected printer
+//       BRLMPrinterDriver *printerDriver = [[BRLMPrinterDriver alloc] initWithDeviceInfo:deviceInfo];
+//       if (printerDriver) {
+//         resolve(@{@"status": @"connected", @"printerName": deviceInfo.strPrinterName});
+//         return;
+//       }
+//     }
+//   }
   
-  reject(@"not_found", @"Printer not found", nil);
-}
+//   reject(@"not_found", @"Printer not found", nil);
+// }
 
-RCT_EXPORT_METHOD(printViaBluetooth:(NSString *)serialNumber data:(NSString *)data resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
-  BRPtouchBluetoothManager *bluetoothManager = [BRPtouchBluetoothManager sharedManager];
-  NSArray *pairedPrinters = [bluetoothManager pairedDevices];
+// RCT_EXPORT_METHOD(printViaBluetooth:(NSString *)serialNumber data:(NSString *)data resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
+//   BRPtouchBluetoothManager *bluetoothManager = [BRPtouchBluetoothManager sharedManager];
+//   NSArray *pairedPrinters = [bluetoothManager pairedDevices];
   
-  for (BRPtouchDeviceInfo *deviceInfo in pairedPrinters) {
-    if ([deviceInfo.strSerialNumber isEqualToString:serialNumber]) {
-      BRLMPrinterDriver *printerDriver = [[BRLMPrinterDriver alloc] initWithDeviceInfo:deviceInfo];
-      if (printerDriver) {
-        // Convert data to NSData and send to printer
-        NSData *printData = [data dataUsingEncoding:NSUTF8StringEncoding];
-        NSError *error = nil;
-        [printerDriver sendData:printData error:&error];
+//   for (BRPtouchDeviceInfo *deviceInfo in pairedPrinters) {
+//     if ([deviceInfo.strSerialNumber isEqualToString:serialNumber]) {
+//       BRLMPrinterDriver *printerDriver = [[BRLMPrinterDriver alloc] initWithDeviceInfo:deviceInfo];
+//       if (printerDriver) {
+//         // Convert data to NSData and send to printer
+//         NSData *printData = [data dataUsingEncoding:NSUTF8StringEncoding];
+//         NSError *error = nil;
+//         [printerDriver sendData:printData error:&error];
         
-        if (error) {
-          reject(@"print_error", @"Failed to print", error);
-        } else {
-          resolve(@{@"status": @"printed"});
-        }
-        return;
-      }
-    }
-  }
+//         if (error) {
+//           reject(@"print_error", @"Failed to print", error);
+//         } else {
+//           resolve(@{@"status": @"printed"});
+//         }
+//         return;
+//       }
+//     }
+//   }
   
-  reject(@"not_found", @"Printer not found", nil);
-}
+//   reject(@"not_found", @"Printer not found", nil);
+// }
 
 -(void)didFinishSearch:(id)sender
 {
