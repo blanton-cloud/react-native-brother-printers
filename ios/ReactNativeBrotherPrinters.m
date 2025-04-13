@@ -88,14 +88,12 @@ RCT_REMAP_METHOD(printImage, deviceInfo:(NSDictionary *)device printerUri: (NSSt
     BRPtouchDeviceInfo *deviceInfo = [self deserializeDeviceInfo:device];
 
     BRLMChannel *channel = [[BRLMChannel alloc] initWithWifiIPAddress:deviceInfo.strIPAddress];
-
     BRLMPrinterDriverGenerateResult *driverGenerateResult = [BRLMPrinterDriverGenerator openChannel:channel];
-    if (driverGenerateResult.error.code != BRLMOpenChannelErrorCodeNoError ||
-        driverGenerateResult.driver == nil) {
-        NSLog(@"%@", @(driverGenerateResult.error.code));
+    if (driverGenerateResult.error.code != BRLMOpenChannelErrorCodeNoError || driverGenerateResult.driver == nil) {
+        NSLog(@"Error initializing printer driver: %@", @(driverGenerateResult.error.code));
+        reject(@"driver_init_error", @"Failed to initialize printer driver", nil);
         return;
     }
-
     BRLMPrinterDriver *printerDriver = driverGenerateResult.driver;
 
     BRLMPrinterModel model = [BRLMPrinterClassifier transferEnumFromString:deviceInfo.strModelName];
