@@ -14,6 +14,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -21,11 +22,12 @@ jobs:
           cache: 'yarn'
           registry-url: https://npm.pkg.github.com/
 
-      - name: Set up Yarn Berry
+      # Enable Corepack and use the correct Yarn version
+      - name: Enable Corepack and set Yarn version
         run: |
           corepack enable
-          yarn set version berry
-    
+          corepack prepare yarn@4.9.1 --activate
+
       # Authenticate with GitHub Packages
       - name: Authenticate with GitHub Packages
         run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
@@ -36,6 +38,6 @@ jobs:
 
       # Publish to GitHub Packages
       - name: Publish package
-        run: yarn publish
+        run: yarn npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
