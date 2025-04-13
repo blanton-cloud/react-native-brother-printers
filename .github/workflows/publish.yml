@@ -28,16 +28,16 @@ jobs:
           cache: 'yarn'
           registry-url: https://npm.pkg.github.com/
 
+      # Install dependencies
+      - name: Install dependencies
+        run: yarn install --immutable
+
       # Authenticate with GitHub Packages
       - name: Authenticate with GitHub Packages
         run: |
           echo "npmRegistryServer: https://npm.pkg.github.com" >> .yarnrc.yml
           echo "npmAlwaysAuth: true" >> .yarnrc.yml
           echo "npmAuthToken: ${{ secrets.GITHUB_TOKEN }}" >> .yarnrc.yml
-
-      # Install dependencies
-      - name: Install dependencies
-        run: yarn install --immutable
 
       # Publish to GitHub Packages
       - name: Publish package
