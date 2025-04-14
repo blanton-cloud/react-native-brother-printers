@@ -82,21 +82,32 @@ RCT_REMAP_METHOD(pingPrinter, printerAddress:(NSString *)ip resolver:(RCTPromise
     resolve(Nil);
 }
 
-RCT_REMAP_METHOD(printImage, deviceInfo:(NSDictionary *)device printerUri: (NSString *)imageStr printImageOptions:(NSDictionary *)options resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+RCT_REMAP_METHOD(printImage, deviceInfo:(NSDictionary *)device printerUri:(NSString *)imageStr printImageOptions:(NSDictionary *)options resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 {
     NSLog(@"Called the printImage function");
-    BRPtouchDeviceInfo *deviceInfo = [self deserializeDeviceInfo:device];
 
-    BRLMChannel *channel = [[BRLMChannel alloc] initWithWifiIPAddress:deviceInfo.strIPAddress];
+    BRLMChannel *channel;
+    if (device[@"serialNumber"] != nil) {
+        // Use Bluetooth if serialNumber is provided
+        channel = [[BRLMChannel alloc] initWithBluetoothSerialNumber:device[@"serialNumber"]];
+    } else if (device[@"ipAddress"] != nil) {
+        // Use WiFi if ipAddress is provided
+        channel = [[BRLMChannel alloc] initWithWifiIPAddress:device[@"ipAddress"]];
+    } else {
+        reject(@"channel_init_error", @"Neither serialNumber nor ipAddress provided", nil);
+        return;
+    }
+
     BRLMPrinterDriverGenerateResult *driverGenerateResult = [BRLMPrinterDriverGenerator openChannel:channel];
     if (driverGenerateResult.error.code != BRLMOpenChannelErrorCodeNoError || driverGenerateResult.driver == nil) {
         NSLog(@"Error initializing printer driver: %@", @(driverGenerateResult.error.code));
         reject(@"driver_init_error", @"Failed to initialize printer driver", nil);
         return;
     }
+
     BRLMPrinterDriver *printerDriver = driverGenerateResult.driver;
 
-    BRLMPrinterModel model = [BRLMPrinterClassifier transferEnumFromString:deviceInfo.strModelName];
+    BRLMPrinterModel model = [BRLMPrinterClassifier transferEnumFromString:device[@"modelName"]];
     BRLMQLPrintSettings *qlSettings = [[BRLMQLPrintSettings alloc] initDefaultPrintSettingsWithPrinterModel:model];
 
     qlSettings.autoCut = true;
@@ -110,26 +121,12 @@ RCT_REMAP_METHOD(printImage, deviceInfo:(NSDictionary *)device printerUri: (NSSt
     }
 
     if (options[@"isHighQuality"]) {
-        if ([options[@"isHighQuality"] boolValue]) {
-            qlSettings.printQuality = BRLMPrintSettingsPrintQualityBest;
-            NSLog(@"High Quality is enabled");
-        } else {
-            qlSettings.printQuality = BRLMPrintSettingsPrintQualityFast;
-            NSLog(@"High Quality is disabled");
-        }
+        qlSettings.printQuality = [options[@"isHighQuality"] boolValue] ? BRLMPrintSettingsPrintQualityBest : BRLMPrintSettingsPrintQualityFast;
     }
 
     if (options[@"isHalftoneErrorDiffusion"]) {
-        if ([options[@"isHalftoneErrorDiffusion"] boolValue]) {
-            qlSettings.halftone = BRLMPrintSettingsHalftoneErrorDiffusion;
-            NSLog(@"Error Diffusion is enabled");
-        } else {
-            qlSettings.halftone = BRLMPrintSettingsHalftoneThreshold;
-            NSLog(@"Error Diffusion is disabled");
-        }
+        qlSettings.halftone = [options[@"isHalftoneErrorDiffusion"] boolValue] ? BRLMPrintSettingsHalftoneErrorDiffusion : BRLMPrintSettingsHalftoneThreshold;
     }
-
-    NSLog(@"Auto Cut: %@, Label Size: %@", options[@"autoCut"], options[@"labelSize"]);
 
     NSURL *url = [NSURL URLWithString:imageStr];
     BRLMPrintError *printError = [printerDriver printImageWithURL:url settings:qlSettings];
@@ -140,23 +137,70 @@ RCT_REMAP_METHOD(printImage, deviceInfo:(NSDictionary *)device printerUri: (NSSt
         NSString *errorCodeString = [NSString stringWithFormat:@"Error code: %ld", (long)printError.code];
         NSString *errorDescription = [NSString stringWithFormat:@"%@ - %@", errorCodeString, printError.description];
 
-        NSDictionary *userInfo = @{
-            NSLocalizedDescriptionKey: errorDescription,
-            @"errorCode": @(printError.code),
-        };
-        
-        NSError *error = [NSError errorWithDomain:@"com.react-native-brother-printers.rn" 
-                                            code:printError.code 
-                                        userInfo:userInfo];
+        NSDictionary *userInfo = @{NSLocalizedDescriptionKey: errorDescription, @"errorCode": @(printError.code)};
+        NSError *error = [NSError errorWithDomain:@"com.react-native-brother-printers.rn" code:printError.code userInfo:userInfo];
 
-        [printerDriver closeChannel]; // Close the channel
-
+        [printerDriver closeChannel];
         reject(PRINT_ERROR, @"There was an error trying to print the image", error);
     } else {
         NSLog(@"Success - Print Image");
+        [printerDriver closeChannel];
+        resolve(Nil);
+    }
+}
 
-        [printerDriver closeChannel]; // Close the channel
+RCT_REMAP_METHOD(printViaBluetooth, serialNumber:(NSString *)serialNumber printerUri:(NSString *)imageStr printImageOptions:(NSDictionary *)options resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+{
+    NSLog(@"Called the printViaBluetooth function");
 
+    BRLMChannel *channel = [[BRLMChannel alloc] initWithBluetoothSerialNumber:serialNumber];
+    BRLMPrinterDriverGenerateResult *driverGenerateResult = [BRLMPrinterDriverGenerator openChannel:channel];
+
+    if (driverGenerateResult.error.code != BRLMOpenChannelErrorCodeNoError || driverGenerateResult.driver == nil) {
+        NSLog(@"Error initializing printer driver: %@", @(driverGenerateResult.error.code));
+        reject(@"driver_init_error", @"Failed to initialize printer driver", nil);
+        return;
+    }
+
+    BRLMPrinterDriver *printerDriver = driverGenerateResult.driver;
+
+    BRLMQLPrintSettings *qlSettings = [[BRLMQLPrintSettings alloc] initDefaultPrintSettingsWithPrinterModel:BRLMPrinterModelQL_820NWB];
+
+    qlSettings.autoCut = true;
+
+    if (options[@"autoCut"]) {
+        qlSettings.autoCut = [options[@"autoCut"] boolValue];
+    }
+
+    if (options[@"labelSize"]) {
+        qlSettings.labelSize = [options[@"labelSize"] intValue];
+    }
+
+    if (options[@"isHighQuality"]) {
+        qlSettings.printQuality = [options[@"isHighQuality"] boolValue] ? BRLMPrintSettingsPrintQualityBest : BRLMPrintSettingsPrintQualityFast;
+    }
+
+    if (options[@"isHalftoneErrorDiffusion"]) {
+        qlSettings.halftone = [options[@"isHalftoneErrorDiffusion"] boolValue] ? BRLMPrintSettingsHalftoneErrorDiffusion : BRLMPrintSettingsHalftoneThreshold;
+    }
+
+    NSURL *url = [NSURL URLWithString:imageStr];
+    BRLMPrintError *printError = [printerDriver printImageWithURL:url settings:qlSettings];
+
+    if (printError.code != BRLMPrintErrorCodeNoError) {
+        NSLog(@"Error - Print Image: %@", printError);
+
+        NSString *errorCodeString = [NSString stringWithFormat:@"Error code: %ld", (long)printError.code];
+        NSString *errorDescription = [NSString stringWithFormat:@"%@ - %@", errorCodeString, printError.description];
+
+        NSDictionary *userInfo = @{NSLocalizedDescriptionKey: errorDescription, @"errorCode": @(printError.code)};
+        NSError *error = [NSError errorWithDomain:@"com.react-native-brother-printers.rn" code:printError.code userInfo:userInfo];
+
+        [printerDriver closeChannel];
+        reject(PRINT_ERROR, @"There was an error trying to print the image", error);
+    } else {
+        NSLog(@"Success - Print Image");
+        [printerDriver closeChannel];
         resolve(Nil);
     }
 }
@@ -172,8 +216,9 @@ RCT_EXPORT_METHOD(discoverBluetoothPrinters:(RCTPromiseResolveBlock)resolve reje
   NSMutableArray *printers = [NSMutableArray array];
   for (BRLMChannel *channel in channels) {
     [printers addObject:@{
+      @"serialNumber": channel.extraInfo[BRLMChannelExtraInfoKeySerialNumber],
       @"modelName": channel.extraInfo[BRLMChannelExtraInfoKeyModelName],
-      @"localName": channel.channelInfo
+      @"name": channel.channelInfo // Use channelInfo for the printer name
     }];
   }
 
