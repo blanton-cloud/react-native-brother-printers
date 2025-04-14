@@ -155,6 +155,17 @@ export const discoverBluetoothPrinters = async () => {
   }
 };
 
+export const discoverBLEPrinters = async () => {
+  try {
+    const printers = await ReactNativeBrotherPrinters.discoverBLEPrinters();
+    console.log('Discovered printers:', printers);
+    return printers;
+  } catch (error) {
+    console.error('Error discovering printers:', error);
+    throw error;
+  }
+};
+
 export const connectToBluetoothPrinter = async (serialNumber) => {
   try {
     const result = await ReactNativeBrotherPrinters.connectToBluetoothPrinter(serialNumber);

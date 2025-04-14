@@ -162,20 +162,44 @@ RCT_REMAP_METHOD(printImage, deviceInfo:(NSDictionary *)device printerUri: (NSSt
 }
 
 RCT_EXPORT_METHOD(discoverBluetoothPrinters:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
-  BRLMPrinterSearcher *printerSearcher = [[BRLMPrinterSearcher alloc] init];
-  BRLMPrinterSearcherResult *searchResult = [printerSearcher searchPrintersWithInterface:BRLMChannelTypeBluetooth];
+  NSArray<BRLMChannel *> *channels = [BRLMPrinterSearcher startBluetoothSearch].channels;
 
-  if (searchResult.error.code != BRLMPrinterSearcherErrorCodeNoError) {
-    reject(DISCOVER_READERS_ERROR, @"Failed to discover Bluetooth printers", nil);
+  if (channels == nil || channels.count == 0) {
+    reject(DISCOVER_READERS_ERROR, @"No Bluetooth printers found", nil);
     return;
   }
 
   NSMutableArray *printers = [NSMutableArray array];
-  for (BRLMPrinterSearchResult *result in searchResult.printerSearchResults) {
+  for (BRLMChannel *channel in channels) {
     [printers addObject:@{
-      @"printerName": result.printerName,
-      @"modelName": result.modelName,
-      @"serialNumber": result.serialNumber
+      @"modelName": channel.extraInfo[BRLMChannelExtraInfoKeyModelName],
+      @"localName": channel.channelInfo
+    }];
+  }
+
+  resolve(printers);
+}
+
+RCT_EXPORT_METHOD(discoverBLEPrinters:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
+  BRLMBLESearchOption *option = [[BRLMBLESearchOption alloc] init];
+  option.searchDuration = 15;
+
+  BRLMPrinterSearchResult *result = [BRLMPrinterSearcher startBLESearch:option callback:^(BRLMChannel *channel) {
+    NSString *modelName = [channel.extraInfo objectForKey:BRLMChannelExtraInfoKeyModelName];
+    NSString *advertiseLocalName = channel.channelInfo;
+    NSLog(@"Model: %@, AdvertiseLocalName: %@", modelName, advertiseLocalName);
+  }];
+
+//   if (result.error.code != BRLMPrinterSearcherErrorCodeNoError) {
+//     reject(DISCOVER_READERS_ERROR, @"Failed to discover BLE printers", nil);
+//     return;
+//   }
+
+  NSMutableArray *printers = [NSMutableArray array];
+  for (BRLMChannel *channel in result.channels) {
+    [printers addObject:@{
+      @"modelName": channel.extraInfo[BRLMChannelExtraInfoKeyModelName],
+      @"advertiseLocalName": channel.channelInfo
     }];
   }
 
