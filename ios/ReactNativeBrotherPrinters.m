@@ -220,6 +220,7 @@ RCT_EXPORT_METHOD(discoverBluetoothPrinters:(RCTPromiseResolveBlock)resolve reje
     [printers addObject:@{
       @"serialNumber": serialNumber,
       @"modelName": modelName,
+      @"printerName": modelName,
     }];
   }
 
