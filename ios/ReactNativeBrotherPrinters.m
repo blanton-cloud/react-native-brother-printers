@@ -23,7 +23,6 @@ RCT_EXPORT_MODULE()
 - (NSArray<NSString *> *)supportedEvents {
     return @[
         @"onBrotherLog",
-
         @"onDiscoverPrinters",
     ];
 }
@@ -49,7 +48,7 @@ RCT_REMAP_METHOD(discoverPrinters, discoverOptions:(NSDictionary *)options resol
             NSLog(@"Could not find PrinterList.plist");
         }
 
-        //    Start printer search
+        // Start printer search
         int response = [_networkManager startSearch: 5.0];
 
         if (response == RET_TRUE) {
@@ -84,17 +83,17 @@ RCT_REMAP_METHOD(pingPrinter, printerAddress:(NSString *)ip resolver:(RCTPromise
 
 RCT_REMAP_METHOD(printImage, deviceInfo:(NSDictionary *)device printerUri:(NSString *)imageStr printImageOptions:(NSDictionary *)options resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 {
-    NSLog(@"Called the printImage function");
+    NSLog(@"Called the printImage function with device: %@", device);
 
     BRLMChannel *channel;
-    if (device[@"serialNumber"] != nil) {
-        // Use Bluetooth if serialNumber is provided
+    if ([device[@"type"] isEqualToString:@"bluetooth"] && device[@"serialNumber"] != nil) {
+        // Use Bluetooth if type is "bluetooth" and serialNumber is provided
         channel = [[BRLMChannel alloc] initWithBluetoothSerialNumber:device[@"serialNumber"]];
-    } else if (device[@"ipAddress"] != nil) {
-        // Use WiFi if ipAddress is provided
+    } else if ([device[@"type"] isEqualToString:@"wifi"] && device[@"ipAddress"] != nil) {
+        // Use WiFi if type is "wifi" and ipAddress is provided
         channel = [[BRLMChannel alloc] initWithWifiIPAddress:device[@"ipAddress"]];
     } else {
-        reject(@"channel_init_error", @"Neither serialNumber nor ipAddress provided", nil);
+        reject(@"channel_init_error", @"Invalid type or missing required fields (serialNumber or ipAddress)", nil);
         return;
     }
 
@@ -215,10 +214,12 @@ RCT_EXPORT_METHOD(discoverBluetoothPrinters:(RCTPromiseResolveBlock)resolve reje
 
   NSMutableArray *printers = [NSMutableArray array];
   for (BRLMChannel *channel in channels) {
+    NSString *serialNumber = channel.extraInfo[BRLMChannelExtraInfoKeySerialNumber];
+    NSString *modelName = channel.extraInfo[BRLMChannelExtraInfoKeyModelName];
+
     [printers addObject:@{
-      @"serialNumber": channel.extraInfo[BRLMChannelExtraInfoKeySerialNumber],
-      @"modelName": channel.extraInfo[BRLMChannelExtraInfoKeyModelName],
-      @"name": channel.channelInfo // Use channelInfo for the printer name
+      @"serialNumber": serialNumber,
+      @"modelName": modelName,
     }];
   }
 
@@ -235,15 +236,11 @@ RCT_EXPORT_METHOD(discoverBLEPrinters:(RCTPromiseResolveBlock)resolve rejecter:(
     NSLog(@"Model: %@, AdvertiseLocalName: %@", modelName, advertiseLocalName);
   }];
 
-//   if (result.error.code != BRLMPrinterSearcherErrorCodeNoError) {
-//     reject(DISCOVER_READERS_ERROR, @"Failed to discover BLE printers", nil);
-//     return;
-//   }
-
   NSMutableArray *printers = [NSMutableArray array];
   for (BRLMChannel *channel in result.channels) {
     [printers addObject:@{
       @"modelName": channel.extraInfo[BRLMChannelExtraInfoKeyModelName],
+      @"printerName": channel.extraInfo[BRLMChannelExtraInfoKeyModelName],
       @"advertiseLocalName": channel.channelInfo
     }];
   }
@@ -255,7 +252,7 @@ RCT_EXPORT_METHOD(discoverBLEPrinters:(RCTPromiseResolveBlock)resolve rejecter:(
 {
     NSLog(@"didFinishedSearch");
 
-    //  get BRPtouchNetworkInfo Class list
+    // Get BRPtouchNetworkInfo Class list
     [_brotherDeviceList removeAllObjects];
     _brotherDeviceList = (NSMutableArray*)[_networkManager getPrinterNetInfo];
 
@@ -267,7 +264,6 @@ RCT_EXPORT_METHOD(discoverBLEPrinters:(RCTPromiseResolveBlock)resolve rejecter:(
         [_serializedArray addObject:[self serializeDeviceInfo:deviceInfo]];
 
         NSLog(@"Model: %@, IP Address: %@", deviceInfo.strModelName, deviceInfo.strIPAddress);
-
     }
 
     [self sendEventWithName:@"onDiscoverPrinters" body:_serializedArray];
@@ -290,17 +286,6 @@ RCT_EXPORT_METHOD(discoverBLEPrinters:(RCTPromiseResolveBlock)resolve rejecter:(
 - (BRPtouchDeviceInfo *) deserializeDeviceInfo:(NSDictionary *)device {
     BRPtouchDeviceInfo *deviceInfo = [[BRPtouchDeviceInfo alloc] init];
 
-//    return @{
-//        @"ipAddress": device.strIPAddress,
-//        @"location": device.strLocation,
-//        @"modelName": device.strModelName,
-//        @"printerName": device.strPrinterName,
-//        @"serialNumber": device.strSerialNumber,
-//        @"nodeName": device.strNodeName,
-//        @"macAddress": device.strMACAddress,
-//    };
-//
-//
     deviceInfo.strIPAddress = [RCTConvert NSString:device[@"ipAddress"]];
     deviceInfo.strLocation = [RCTConvert NSString:device[@"location"]];
     deviceInfo.strModelName = [RCTConvert NSString:device[@"modelName"]];
