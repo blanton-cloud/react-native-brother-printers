@@ -196,3 +196,21 @@ if (ReactNativeBrotherPrinters) {
 export function registerBrotherListener(key, method) {
   return listeners?.addListener(key, method);
 }
+
+/**
+ * Retrieves the status of a printer
+ *
+ * @param device                  Device object
+ * @param device.type             Type of the device (e.g., "bluetooth" or "wifi")
+ * @param device.serialNumber     Serial number of the device (required for Bluetooth)
+ * @param device.ipAddress        IP address of the device (required for WiFi)
+ *
+ * @return {Promise<Object>}      Printer status object
+ */
+export async function getPrinterStatus(device) {
+  if (!device || !device.type) {
+    throw new Error("Device type must be specified");
+  }
+
+  return ReactNativeBrotherPrinters?.getPrinterStatus(device);
+}

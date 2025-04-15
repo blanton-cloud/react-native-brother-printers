@@ -249,6 +249,57 @@ RCT_EXPORT_METHOD(discoverBLEPrinters:(RCTPromiseResolveBlock)resolve rejecter:(
   resolve(printers);
 }
 
+RCT_REMAP_METHOD(getPrinterStatus, deviceInfo:(NSDictionary *)device resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+{
+    NSLog(@"Called the getPrinterStatus function with device: %@", device);
+
+    BRLMChannel *channel;
+    if ([device[@"type"] isEqualToString:@"bluetooth"] && device[@"serialNumber"] != nil) {
+        channel = [[BRLMChannel alloc] initWithBluetoothSerialNumber:device[@"serialNumber"]];
+    } else if ([device[@"type"] isEqualToString:@"wifi"] && device[@"ipAddress"] != nil) {
+        channel = [[BRLMChannel alloc] initWithWifiIPAddress:device[@"ipAddress"]];
+    } else {
+        reject(@"channel_init_error", @"Invalid type or missing required fields (serialNumber or ipAddress)", nil);
+        return;
+    }
+
+    BRLMPrinterDriverGenerateResult *driverGenerateResult = [BRLMPrinterDriverGenerator openChannel:channel];
+    if (driverGenerateResult.error.code != BRLMOpenChannelErrorCodeNoError || driverGenerateResult.driver == nil) {
+        NSLog(@"Error initializing printer driver: %@", @(driverGenerateResult.error.code));
+        reject(@"driver_init_error", @"Failed to initialize printer driver", nil);
+        return;
+    }
+
+    BRLMPrinterDriver *printerDriver = driverGenerateResult.driver;
+    BRLMPrinterStatus *printerStatus = [printerDriver getPrinterStatus];
+
+    if (printerStatus == nil) {
+        NSLog(@"Failed to retrieve printer status");
+        reject(@"status_error", @"Failed to retrieve printer status", nil);
+    } else {
+        NSDictionary *statusDict = @{ 
+            @"isReady": @(printerStatus.isReady),
+            @"hasError": @(printerStatus.hasError),
+            @"errorCode": @(printerStatus.errorCode),
+            @"errorDescription": printerStatus.errorDescription ?: @"",
+            @"rawData": printerStatus.rawData ?: @"",
+            @"model": @(printerStatus.model),
+            @"batteryStatus": printerStatus.batteryStatus ? @{ 
+                @"level": @(printerStatus.batteryStatus.level),
+                @"isCharging": @(printerStatus.batteryStatus.isCharging)
+            } : [NSNull null],
+            @"mediaInfo": printerStatus.mediaInfo ? @{ 
+                @"width": @(printerStatus.mediaInfo.width),
+                @"length": @(printerStatus.mediaInfo.length),
+                @"type": @(printerStatus.mediaInfo.type)
+            } : [NSNull null]
+        };
+        resolve(statusDict);
+    }
+
+    [printerDriver closeChannel];
+}
+
 -(void)didFinishSearch:(id)sender
 {
     NSLog(@"didFinishedSearch");
