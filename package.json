@@ -17,8 +17,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/W3lcomeApp/react-native-brother-printers.git",
-    "baseUrl": "https://github.com/W3lcomeApp/react-native-brother-printers"
+    "url": "git+https://github.com/blanton-cloud/react-native-brother-printers.git",
+    "baseUrl": "https://github.com/blanton-cloud/react-native-brother-printers"
   },
   "keywords": [
     "react-native",
@@ -31,7 +31,8 @@
     "email": "avery@dripos.com"
   },
   "contributors": [
-    "Alisson Enz Rossi <alisson@w3lcome.com>"
+    "Alisson Enz Rossi <alisson@w3lcome.com>",
+    "Michael Blanton <michael@blanton.cloud>"
   ],
   "license": "MIT",
   "readmeFilename": "README.md",

@@ -14,14 +14,14 @@ Pod::Spec.new do |s|
   s.homepage     = "https://github.com/W3lcomeApp/react-native-brother-printers"
   s.license      = "MIT"
   s.authors      = { "W3lcome" => "dev@w3lcome.com" }
-  s.platforms    = { :ios => "9.0" }
-  s.source       = { :git => "https://github.com/W3lcomeApp/react-native-brother-printers.git", :tag => "#{s.version}" }
+  s.platforms    = { :ios => "13.0" }
+  s.source       = { :git => "https://github.com/W3lcomeApp/react-native-brother-printers.git", :tag => "v#{s.version}" }
 
   s.source_files = "ios/**/*.{h,c,cc,cpp,m,mm,swift,plist}"
   s.requires_arc = true
   s.resources = 'ios/**/*.plist'
 
   s.dependency "React"
-  s.dependency "BRLMPrinterKit", '4.7.2'
+  s.dependency "BRLMPrinterKit", :git => "https://github.com/your-username/BRLMPrinterKit.git", :tag => "v4.12.0"
 end
 
