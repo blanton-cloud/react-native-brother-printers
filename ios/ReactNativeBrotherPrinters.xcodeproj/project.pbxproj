@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		362E446E09F149C1792A0081 /* Pods_ReactNativeBrotherPrinters.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B877265F4B823488C8791325 /* Pods_ReactNativeBrotherPrinters.framework */; };
+		B6345061C803C09B57E9EB70 /* Pods_ReactNativeBrotherPrinters.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62BF9F7DA898DF2B98964B7D /* Pods_ReactNativeBrotherPrinters.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,9 +24,9 @@
 
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libReactNativeBrotherPrinters.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libReactNativeBrotherPrinters.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		5F3BFE38B452F4F976DDBE0A /* Pods-ReactNativeBrotherPrinters.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeBrotherPrinters.debug.xcconfig"; path = "Target Support Files/Pods-ReactNativeBrotherPrinters/Pods-ReactNativeBrotherPrinters.debug.xcconfig"; sourceTree = "<group>"; };
-		B877265F4B823488C8791325 /* Pods_ReactNativeBrotherPrinters.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ReactNativeBrotherPrinters.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C932EEB2719B07BD9B33A44D /* Pods-ReactNativeBrotherPrinters.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeBrotherPrinters.release.xcconfig"; path = "Target Support Files/Pods-ReactNativeBrotherPrinters/Pods-ReactNativeBrotherPrinters.release.xcconfig"; sourceTree = "<group>"; };
+		62BF9F7DA898DF2B98964B7D /* Pods_ReactNativeBrotherPrinters.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ReactNativeBrotherPrinters.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A124C178253C69A0B1940475 /* Pods-ReactNativeBrotherPrinters.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeBrotherPrinters.debug.xcconfig"; path = "Target Support Files/Pods-ReactNativeBrotherPrinters/Pods-ReactNativeBrotherPrinters.debug.xcconfig"; sourceTree = "<group>"; };
+		DF1EA6951AA94BC28F385F00 /* Pods-ReactNativeBrotherPrinters.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeBrotherPrinters.release.xcconfig"; path = "Target Support Files/Pods-ReactNativeBrotherPrinters/Pods-ReactNativeBrotherPrinters.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -34,13 +34,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				362E446E09F149C1792A0081 /* Pods_ReactNativeBrotherPrinters.framework in Frameworks */,
+				B6345061C803C09B57E9EB70 /* Pods_ReactNativeBrotherPrinters.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0E68BC2393E8F02C4032CD35 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				62BF9F7DA898DF2B98964B7D /* Pods_ReactNativeBrotherPrinters.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		134814211AA4EA7D00B7C361 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -49,11 +57,11 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		377D0253DE311619CF4ADB20 /* Pods */ = {
+		4C4CA614A0C8B0391F60A755 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				5F3BFE38B452F4F976DDBE0A /* Pods-ReactNativeBrotherPrinters.debug.xcconfig */,
-				C932EEB2719B07BD9B33A44D /* Pods-ReactNativeBrotherPrinters.release.xcconfig */,
+				A124C178253C69A0B1940475 /* Pods-ReactNativeBrotherPrinters.debug.xcconfig */,
+				DF1EA6951AA94BC28F385F00 /* Pods-ReactNativeBrotherPrinters.release.xcconfig */,
 			);
 			name = Pods;
 			path = Pods;
@@ -63,17 +71,9 @@
 			isa = PBXGroup;
 			children = (
 				134814211AA4EA7D00B7C361 /* Products */,
-				377D0253DE311619CF4ADB20 /* Pods */,
-				5A215BE9EABB1CADFF2452D6 /* Frameworks */,
+				4C4CA614A0C8B0391F60A755 /* Pods */,
+				0E68BC2393E8F02C4032CD35 /* Frameworks */,
 			);
-			sourceTree = "<group>";
-		};
-		5A215BE9EABB1CADFF2452D6 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				B877265F4B823488C8791325 /* Pods_ReactNativeBrotherPrinters.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,7 +83,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 58B511EF1A9E6C8500147676 /* Build configuration list for PBXNativeTarget "ReactNativeBrotherPrinters" */;
 			buildPhases = (
-				00C63C2CC8F624A58B9F6D7A /* [CP] Check Pods Manifest.lock */,
+				8A34965FC0D94B03790FB51F /* [CP] Check Pods Manifest.lock */,
 				58B511D71A9E6C8500147676 /* Sources */,
 				58B511D81A9E6C8500147676 /* Frameworks */,
 				58B511D91A9E6C8500147676 /* CopyFiles */,
@@ -130,7 +130,7 @@
 /* End PBXProject section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		00C63C2CC8F624A58B9F6D7A /* [CP] Check Pods Manifest.lock */ = {
+		8A34965FC0D94B03790FB51F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -278,7 +278,7 @@
 		};
 		58B511F01A9E6C8500147676 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5F3BFE38B452F4F976DDBE0A /* Pods-ReactNativeBrotherPrinters.debug.xcconfig */;
+			baseConfigurationReference = A124C178253C69A0B1940475 /* Pods-ReactNativeBrotherPrinters.debug.xcconfig */;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -295,7 +295,7 @@
 		};
 		58B511F11A9E6C8500147676 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C932EEB2719B07BD9B33A44D /* Pods-ReactNativeBrotherPrinters.release.xcconfig */;
+			baseConfigurationReference = DF1EA6951AA94BC28F385F00 /* Pods-ReactNativeBrotherPrinters.release.xcconfig */;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",

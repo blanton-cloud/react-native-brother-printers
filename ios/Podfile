@@ -6,6 +6,6 @@ target 'ReactNativeBrotherPrinters' do
   use_frameworks!
 
   # Pods for ReactNativeBrotherPrinters
-  pod 'BRLMPrinterKit', :git => 'https://github.com/blanton-cloud/BRLMPrinterKit.git'
+  pod 'BRLMPrinterKit', :git => 'https://github.com/blanton-cloud/BRLMPrinterKit.git', :branch => 'main'
 
 end
