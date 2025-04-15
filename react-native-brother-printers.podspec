@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.license      = "MIT"
   s.authors      = { "W3lcome" => "dev@w3lcome.com" }
   s.platforms    = { :ios => "13.0" }
-  s.source       = { :git => "https://github.com/blanton-cloud/react-native-brother-printers.git", :tag => "v#{s.version}" }
+  s.source       = { :git => "https://github.com/blanton-cloud/react-native-brother-printers.git" }
 
   s.source_files = "ios/**/*.{h,c,cc,cpp,m,mm,swift,plist}"
   s.requires_arc = true
