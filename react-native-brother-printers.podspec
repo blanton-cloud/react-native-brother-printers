@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.description  = <<-DESC
                   The iOS portion of the wrapper for using brother printers with react native
                    DESC
-  s.homepage     = "https://github.com/W3lcomeApp/react-native-brother-printers"
+  s.homepage     = "https://github.com/blanton-cloud/react-native-brother-printers"
   s.license      = "MIT"
   s.authors      = { "W3lcome" => "dev@w3lcome.com" }
   s.platforms    = { :ios => "13.0" }

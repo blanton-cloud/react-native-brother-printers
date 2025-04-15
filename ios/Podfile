@@ -1,0 +1,11 @@
+# Set the deployment target to iOS 13
+platform :ios, '13.0'
+
+target 'ReactNativeBrotherPrinters' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for ReactNativeBrotherPrinters
+  pod 'BRLMPrinterKit', :git => 'https://github.com/blanton-cloud/BRLMPrinterKit.git'
+
+end

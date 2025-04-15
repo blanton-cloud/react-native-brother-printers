@@ -1,0 +1,21 @@
+PODS:
+  - BRLMPrinterKit (4.12.0)
+
+DEPENDENCIES:
+  - BRLMPrinterKit (from `https://github.com/blanton-cloud/BRLMPrinterKit.git`)
+
+EXTERNAL SOURCES:
+  BRLMPrinterKit:
+    :git: https://github.com/blanton-cloud/BRLMPrinterKit.git
+
+CHECKOUT OPTIONS:
+  BRLMPrinterKit:
+    :commit: 815f7320da260d201a0f46c4f19b497dc78d21b3
+    :git: https://github.com/blanton-cloud/BRLMPrinterKit.git
+
+SPEC CHECKSUMS:
+  BRLMPrinterKit: 4d2c92f66f6f685fde9cf24fd6d4a4741c4d591e
+
+PODFILE CHECKSUM: ec4ac6d145ddaffa3a979cbbe0eb3d6ed2bda33e
+
+COCOAPODS: 1.16.2
