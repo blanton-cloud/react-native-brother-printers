@@ -22,6 +22,6 @@ Pod::Spec.new do |s|
   s.resources = 'ios/**/*.plist'
 
   s.dependency "React"
-  s.dependency "BRLMPrinterKit", :git => "https://github.com/blanton-cloud/BRLMPrinterKit.git", :tag => "v4.12.0"
+  s.dependency "BRLMPrinterKit"
 end
 

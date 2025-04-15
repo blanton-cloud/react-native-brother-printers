@@ -18,6 +18,20 @@ or if you are using React Native before version 0.60,
 
 `$ react-native link @w3lcome/react-native-brother-printers`
 
+## iOS Setup
+
+To use this library on iOS, you need to manually add the `BRLMPrinterKit` dependency to your `Podfile`. Add the following line to your `Podfile`:
+
+```ruby
+pod 'BRLMPrinterKit', :git => 'https://github.com/blanton-cloud/BRLMPrinterKit.git', :tag => 'v4.12.0'
+```
+
+Then, run:
+
+```bash
+pod install
+```
+
 ## Usage
 
 ### Discovering a printer
