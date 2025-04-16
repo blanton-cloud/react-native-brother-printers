@@ -4,65 +4,75 @@ import { NativeModules, NativeEventEmitter } from "react-native";
 
 const { ReactNativeBrotherPrinters } = NativeModules || {};
 
-export const LabelSizeDieCutW17H54 = 0;
-export const LabelSizeDieCutW17H87 = 1;
-export const LabelSizeDieCutW23H23 = 2;
-export const LabelSizeDieCutW29H42 = 3;
-export const LabelSizeDieCutW29H90 = 4;
-export const LabelSizeDieCutW38H90 = 5;
-export const LabelSizeDieCutW39H48 = 6;
-export const LabelSizeDieCutW52H29 = 7;
-export const LabelSizeDieCutW62H29 = 8;
-export const LabelSizeDieCutW62H100 = 9;
-export const LabelSizeDieCutW60H86 = 10;
-export const LabelSizeDieCutW54H29 = 11;
-export const LabelSizeDieCutW102H51 = 12;
-export const LabelSizeDieCutW102H152 = 13;
-export const LabelSizeDieCutW103H164 = 14;
-export const LabelSizeRollW12 = 15;
-export const LabelSizeRollW29 = 16;
-export const LabelSizeRollW38 = 17;
-export const LabelSizeRollW50 = 18;
-export const LabelSizeRollW54 = 19;
-export const LabelSizeRollW62 = 20;
-export const LabelSizeRollW62RB = 21;
-export const LabelSizeRollW102 = 22;
-export const LabelSizeRollW103 = 23;
-export const LabelSizeDTRollW90 = 24;
-export const LabelSizeDTRollW102 = 25;
-export const LabelSizeDTRollW102H51 = 26;
-export const LabelSizeDTRollW102H152 = 27;
+export const BRLMQLPrintSettingsLabelSizeDieCutW17H54 = 0;
+export const BRLMQLPrintSettingsLabelSizeDieCutW17H87 = 1;
+export const BRLMQLPrintSettingsLabelSizeDieCutW23H23 = 2;
+export const BRLMQLPrintSettingsLabelSizeDieCutW29H42 = 3;
+export const BRLMQLPrintSettingsLabelSizeDieCutW29H90 = 4;
+export const BRLMQLPrintSettingsLabelSizeDieCutW38H90 = 5;
+export const BRLMQLPrintSettingsLabelSizeDieCutW39H48 = 6;
+export const BRLMQLPrintSettingsLabelSizeDieCutW52H29 = 7;
+export const BRLMQLPrintSettingsLabelSizeDieCutW62H29 = 8;
+export const BRLMQLPrintSettingsLabelSizeDieCutW62H60 = 9;
+export const BRLMQLPrintSettingsLabelSizeDieCutW62H75 = 10;
+export const BRLMQLPrintSettingsLabelSizeDieCutW62H100 = 11;
+export const BRLMQLPrintSettingsLabelSizeDieCutW60H86 = 12;
+export const BRLMQLPrintSettingsLabelSizeDieCutW54H29 = 13;
+export const BRLMQLPrintSettingsLabelSizeDieCutW102H51 = 14;
+export const BRLMQLPrintSettingsLabelSizeDieCutW102H152 = 15;
+export const BRLMQLPrintSettingsLabelSizeDieCutW103H164 = 16;
+export const BRLMQLPrintSettingsLabelSizeRollW12 = 17;
+export const BRLMQLPrintSettingsLabelSizeRollW29 = 18;
+export const BRLMQLPrintSettingsLabelSizeRollW38 = 19;
+export const BRLMQLPrintSettingsLabelSizeRollW50 = 20;
+export const BRLMQLPrintSettingsLabelSizeRollW54 = 21;
+export const BRLMQLPrintSettingsLabelSizeRollW62 = 22;
+export const BRLMQLPrintSettingsLabelSizeRollW62RB = 23;
+export const BRLMQLPrintSettingsLabelSizeRollW102 = 24;
+export const BRLMQLPrintSettingsLabelSizeRollW103 = 25;
+export const BRLMQLPrintSettingsLabelSizeDTRollW90 = 26;
+export const BRLMQLPrintSettingsLabelSizeDTRollW102 = 27;
+export const BRLMQLPrintSettingsLabelSizeDTRollW102H51 = 28;
+export const BRLMQLPrintSettingsLabelSizeDTRollW102H152 = 29;
+export const BRLMQLPrintSettingsLabelSizeRoundW12DIA = 30;
+export const BRLMQLPrintSettingsLabelSizeRoundW24DIA = 31;
+export const BRLMQLPrintSettingsLabelSizeRoundW58DIA = 32;
 
 export const LabelSize = {
-  LabelSizeDieCutW17H54,
-  LabelSizeDieCutW17H87,
-  LabelSizeDieCutW23H23,
-  LabelSizeDieCutW29H42,
-  LabelSizeDieCutW29H90,
-  LabelSizeDieCutW38H90,
-  LabelSizeDieCutW39H48,
-  LabelSizeDieCutW52H29,
-  LabelSizeDieCutW62H29,
-  LabelSizeDieCutW62H100,
-  LabelSizeDieCutW60H86,
-  LabelSizeDieCutW54H29,
-  LabelSizeDieCutW102H51,
-  LabelSizeDieCutW102H152,
-  LabelSizeDieCutW103H164,
-  LabelSizeRollW12,
-  LabelSizeRollW29,
-  LabelSizeRollW38,
-  LabelSizeRollW50,
-  LabelSizeRollW54,
-  LabelSizeRollW62,
-  LabelSizeRollW62RB,
-  LabelSizeRollW102,
-  LabelSizeRollW103,
-  LabelSizeDTRollW90,
-  LabelSizeDTRollW102,
-  LabelSizeDTRollW102H51,
-  LabelSizeDTRollW102H152,
-}
+  BRLMQLPrintSettingsLabelSizeDieCutW17H54,
+  BRLMQLPrintSettingsLabelSizeDieCutW17H87,
+  BRLMQLPrintSettingsLabelSizeDieCutW23H23,
+  BRLMQLPrintSettingsLabelSizeDieCutW29H42,
+  BRLMQLPrintSettingsLabelSizeDieCutW29H90,
+  BRLMQLPrintSettingsLabelSizeDieCutW38H90,
+  BRLMQLPrintSettingsLabelSizeDieCutW39H48,
+  BRLMQLPrintSettingsLabelSizeDieCutW52H29,
+  BRLMQLPrintSettingsLabelSizeDieCutW62H29,
+  BRLMQLPrintSettingsLabelSizeDieCutW62H60,
+  BRLMQLPrintSettingsLabelSizeDieCutW62H75,
+  BRLMQLPrintSettingsLabelSizeDieCutW62H100,
+  BRLMQLPrintSettingsLabelSizeDieCutW60H86,
+  BRLMQLPrintSettingsLabelSizeDieCutW54H29,
+  BRLMQLPrintSettingsLabelSizeDieCutW102H51,
+  BRLMQLPrintSettingsLabelSizeDieCutW102H152,
+  BRLMQLPrintSettingsLabelSizeDieCutW103H164,
+  BRLMQLPrintSettingsLabelSizeRollW12,
+  BRLMQLPrintSettingsLabelSizeRollW29,
+  BRLMQLPrintSettingsLabelSizeRollW38,
+  BRLMQLPrintSettingsLabelSizeRollW50,
+  BRLMQLPrintSettingsLabelSizeRollW54,
+  BRLMQLPrintSettingsLabelSizeRollW62,
+  BRLMQLPrintSettingsLabelSizeRollW62RB,
+  BRLMQLPrintSettingsLabelSizeRollW102,
+  BRLMQLPrintSettingsLabelSizeRollW103,
+  BRLMQLPrintSettingsLabelSizeDTRollW90,
+  BRLMQLPrintSettingsLabelSizeDTRollW102,
+  BRLMQLPrintSettingsLabelSizeDTRollW102H51,
+  BRLMQLPrintSettingsLabelSizeDTRollW102H152,
+  BRLMQLPrintSettingsLabelSizeRoundW12DIA,
+  BRLMQLPrintSettingsLabelSizeRoundW24DIA,
+  BRLMQLPrintSettingsLabelSizeRoundW58DIA,
+};
 
 export const LabelNames = [
   "Die Cut 17mm x 54mm", // 0
@@ -195,4 +205,22 @@ if (ReactNativeBrotherPrinters) {
 
 export function registerBrotherListener(key, method) {
   return listeners?.addListener(key, method);
+}
+
+/**
+ * Retrieves the status of a printer
+ *
+ * @param device                  Device object
+ * @param device.type             Type of the device (e.g., "bluetooth" or "wifi")
+ * @param device.serialNumber     Serial number of the device (required for Bluetooth)
+ * @param device.ipAddress        IP address of the device (required for WiFi)
+ *
+ * @return {Promise<Object>}      Printer status object
+ */
+export async function getPrinterStatus(device) {
+  if (!device || !device.type) {
+    throw new Error("Device type must be specified");
+  }
+
+  return ReactNativeBrotherPrinters?.getPrinterStatus(device);
 }
